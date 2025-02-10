@@ -7,7 +7,7 @@ idUser:{type:String,required:true},
 expectedValue:{type:Number},
 fixedValue:{type:Boolean},
 paid:{type:Boolean},
-hitoricalValue:{type:Array}
+historicalValue:{type:Array}
 },{versionKey:false})
 
 module.exports=model('Obligation',obligationSchema)
