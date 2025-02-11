@@ -1,7 +1,7 @@
 const express= require('express')
 const entorno= require('dotenv')
 const app = express()
-const index= require('./routes/index')
+const auth = require ('./routes/auth')
 const users = require('./routes/users')
 const obligations = require('./routes/obligations')
 
@@ -14,8 +14,7 @@ app.use(express.json())
 app.set('PORT',3000)
 app.listen(app.get('PORT'),()=>{console.log("app listen in port: ",app.get('PORT'))})
 
-
-app.use('/',index)
+app.use('/auth',auth)
 app.use('/users',users)
 app.use('/obligations',obligations)
 

@@ -1,8 +1,9 @@
 const Obligations = require('../models/Obligation')
 
 const newObligation = async (req, res) => {
-  const { nameObligation, description, idUser, expectedValue, fixedValue, paid, historicalValue } = req.body
-  const newObligation = new Obligations({ nameObligation, description, idUser, expectedValue, fixedValue, paid, historicalValue })
+  const { nameObligation, description, expectedValue, fixedValue, paid, historicalValue } = req.body
+  userId= req.userId
+  const newObligation = new Obligations({ nameObligation, description,userId , expectedValue, fixedValue, paid, historicalValue })
   await newObligation.save()
   res.send(newObligation)
 }
@@ -15,7 +16,8 @@ const updateObligation = async (req, res) => {
 }
 
 const getObligations = async (req, res) => {
-  const obligations = await Obligations.find()
+  const userId=req.userId
+  const obligations = await Obligations.find({userId})
   res.send(obligations)
 }
 

@@ -3,7 +3,7 @@ const {Schema, model}= require('mongoose')
 const obligationSchema = new Schema({
 nameObligation:{type:String, required:true},
 description:{type:String},
-idUser:{type:String,required:true},
+userId:{type:String,required:true},
 expectedValue:{type:Number},
 fixedValue:{type:Boolean},
 paid:{type:Boolean},
