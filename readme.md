@@ -10,3 +10,9 @@ En est punto considero que hay un avance improtante del diseño del backen espec
 se han protegido:
 ruta get: de tal manera que solo se pueden ver u obtener las obligaciones del usuario identificacdo
 por el momento no se considera importante proteger las rutas de borrado y de actualizacion de obligaciones ya que sus id, necesarios para la url solo se obtienen si hay un usuario identificado
+
+
+
+       master--------\
+                      \
+                        \---------   development
