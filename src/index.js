@@ -6,17 +6,17 @@ const app = express()
 const passport = require('passport')
 const session = require('express-session')
 
-app.use(express.urlencoded({ extended: true })) // envio de datos de fomrulario al backend
-// app.use(methodOverride('_method')) 
+  app.use(express.urlencoded({ extended: true })) // envio de datos de fomrulario al backend
+  // app.use(methodOverride('_method')) 
 
-require('./config/passport')
-app.use(session({
-  secret:'Cualquier cosa',
-  resave:true,
-  saveUninitialized:true
-}))
-app.use(passport.initialize())
-app.use(passport.session())
+  require('./config/passport')
+  app.use(session({
+    secret:'Cualquier cosa',
+    resave:true,
+    saveUninitialized:true
+  }))
+  app.use(passport.initialize())
+  app.use(passport.session())
 
 
 const auth = require('./routes/auth')
@@ -42,6 +42,8 @@ app.get('/',(req,res)=>{res.send(`<form action="/auth/signin" method="POST">
   <button type="submit">Ingresa</button>
   </form>`)})
 
-app.get('/loginok',(req,res)=>{res.send("<h1>Usuario logueado</h1>")})
+app.get('/loginok',(req,res)=>{
+  const  name=  req.user.name 
+  res.send("<h1>Usuario logueado</h1>"+`nombre ${name}`)})
 app.get('/loginnotok',(req,res)=>{res.send("<h1>Usuario erroneo</h1>")})
 
