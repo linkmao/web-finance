@@ -3,12 +3,12 @@ const passport = require ('passport')
 router=Router()
 
 const {verifyEmail}= require('../midleware/users')
-const {signUp,signIn}=require('../controller/auth')
+const {signUp,signInToken}=require('../controller/auth')
 
 router.post('/signup',verifyEmail,signUp)
 
 // version Token
-// router.post('/signin',signIn)
+router.post('/signintoken',signInToken)
 
 router.post('/signin', passport.authenticate('local', {
   successRedirect: '../loginok',

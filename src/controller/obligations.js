@@ -1,9 +1,11 @@
 const Obligations = require('../models/Obligation')
+const formatHistorical= require('../logic/logic')
 
 const newObligation = async (req, res) => {
-  const { nameObligation, description, expectedValue, fixedValue, paid, historicalValue } = req.body
-  userId= req.userId
-  const newObligation = new Obligations({ nameObligation, description,userId , expectedValue, fixedValue, paid, historicalValue })
+  const { nameObligation, description, expectedValue, fixedValue, limitDay, initialDate } = req.body
+  userId= req.userId // ESTE ID DE USUARIO VIENE DEL TOKEN
+  const historicalValue = formatHistorical(initialDate,expectedValue)
+  const newObligation = new Obligations({ nameObligation, description,userId , expectedValue, fixedValue, limitDay, historicalValue })
   await newObligation.save()
   res.send(newObligation)
 }
@@ -34,4 +36,16 @@ const deleteObligation = async (req, res) => {
   res.send(deletedObligation)
 }
 
-module.exports = { newObligation, getObligations, getObligation, updateObligation, deleteObligation }
+
+// controlador de desarrollo
+const deleteAllObligation = async (req,res)=>{
+  const deleteAll = await Obligations.deleteMany()
+  deleteAll.message= "SE HAN BORRADO TODAS LAS OBLIGACIONES"
+  console.log("SE HAN BORRADO TODAS LAS OBLIGACIONES")
+  res.status(200).send(deleteAll)
+}
+
+
+
+
+module.exports = { newObligation, getObligations, getObligation, updateObligation, deleteObligation, deleteAllObligation}

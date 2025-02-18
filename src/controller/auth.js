@@ -8,7 +8,9 @@ const signUp = async (req, res) => {
   res.send(newUser)
 }
 
-const signIn = async (req, res) => {
+
+// COntrolador de ingreso gestionado con TOKEN
+const signInToken = async (req, res) => {
   const {email, pass} = req.body
   const userFound = await User.findOne({ email })
   if (!userFound) {
@@ -24,5 +26,5 @@ const signIn = async (req, res) => {
   }
 }
 
-module.exports={signUp,signIn}
+module.exports={signUp,signInToken}
 
