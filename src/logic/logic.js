@@ -44,4 +44,37 @@ fechas.forEach(i=>{
   return arrayReturn
 }
 
-module.exports = formatHistorical
+
+const searchHistorical =(data, obligations)=>{
+const dateToSearch = new Date(data.dateObligation[0],data.dateObligation[1])
+const date = obligations.historicalValue
+res= date.find(x=>{
+  if (x[1].getTime()==dateToSearch.getTime()) {
+    if(data.value) x[0]=data.value
+    if(data.newDateObligation) x[1]=new Date(data.newDateObligation[0],data.newDateObligation[1])
+    if(data.paid) x[2]=data.paid
+    if(data.datePaid) x[3]=new Date(data.datePaid[0],data.datePaid[1])
+    if(data.anotation) x[4] = data.anotation  
+  } 
+})
+return date
+}
+
+
+
+module.exports = {formatHistorical,searchHistorical}
+
+
+// const informacion = data.historicalValue
+// res = informacion.find(x=>{
+//   const fechaOriginal= x[1]
+//  if(fechaOriginal=="2024-11-01T05:00:00.000Z")
+//  {
+//   x[0]= newValue
+//   // x[1]= newDate
+//   // x[2]= newState
+//   // x[3]= newDatePaid
+//   x[4]= newAnotation
+//  }
+//   }
+// )

@@ -1,5 +1,5 @@
 const Obligations = require('../models/Obligation')
-const formatHistorical= require('../logic/logic')
+const {formatHistorical,searchHistorical}= require('../logic/logic')
 
 const newObligation = async (req, res) => {
   const { nameObligation, description, expectedValue, fixedValue, limitDay, initialDate } = req.body
@@ -15,6 +15,15 @@ const updateObligation = async (req, res) => {
   const data = req.body
   const updatedObligation = await Obligations.findByIdAndUpdate(id, data)
   res.send(updatedObligation)
+}
+
+const updateObligationHistorical = async (req, res) => {
+  const id = req.params.id
+  const obligations= await Obligations.findById(id) 
+  const data = req.body
+  const historicalValue= searchHistorical(data, obligations)
+  const updatedObligation = await Obligations.findByIdAndUpdate(id, {historicalValue})
+  res.send("Servidor ok")
 }
 
 const getObligations = async (req, res) => {
@@ -48,4 +57,4 @@ const deleteAllObligation = async (req,res)=>{
 
 
 
-module.exports = { newObligation, getObligations, getObligation, updateObligation, deleteObligation, deleteAllObligation}
+module.exports = { newObligation, getObligations, getObligation, updateObligation,updateObligationHistorical, deleteObligation, deleteAllObligation}
