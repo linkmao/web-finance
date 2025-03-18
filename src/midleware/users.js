@@ -8,6 +8,15 @@ const verifyEmail = async (req, res, next) => {
   next()
 }
 
+
+const verifyPass = (req,res, next)=>{
+  const {pass,pass2}= req.body
+  console.log(pass,pass2)
+  if (pass != pass2) 
+    return res.render("nuevousuario") // Nuevamente renderiza la pagina de nuevo usuario
+  next()
+} 
+
 // Validacion en el caso de uso de token
 const verifyToken = async (req, res, next) => {
   const token = req.headers["x-access-token"]
@@ -19,4 +28,12 @@ const verifyToken = async (req, res, next) => {
   next()
 }
 
-module.exports = { verifyEmail, verifyToken }
+
+// Validacion de que el usuario está logueado (usando passport)
+const verifyAuth = (req,res,next)=>{
+  if (req.isAuthenticated()) { return next() }
+    res.status(404).redirect('/')
+}
+
+
+module.exports = { verifyEmail, verifyPass,verifyToken,verifyAuth }

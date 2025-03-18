@@ -6,7 +6,9 @@ email:{type:String},
 userName:{type:String,required:true},
 pass:{type:String,required:true},
 name:{type:String,required:true},
-lastName:{type:String,required:true}
+lastName:{type:String,required:true},
+control:{type:Array},
+controlMayor:{type:Number}
 },{versionKey:false})
 
 // Creaciond el metodo para la encriptacion de la contraseña

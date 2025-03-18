@@ -1,0 +1,33 @@
+{{#each data}}
+<h1>USUARIO IDENTIFICADO</h1>
+<h2>Bienvenido</h2>
+<h2>{{anno}}</h2>
+<h2>{{month}}</h2>
+<a href="/api/auth/logout">Logout</a> 
+<p>{{name}} {{lastName}}</p>
+<p>{{userName}}</p>
+<p>{{email}}</p>
+{{#if enabledPrev}}
+<a href="/changemonth/prev">Mes ant</a>
+{{/if}}
+{{#if enabledNext}}
+<a href="/changemonth/next">Mes sig</a>
+{{/if}}
+{{/each}}
+
+{{#each obligations}}
+<h2>{{nameObligation}}</h2>
+<h4>{{description}}</h4>
+<p>Valor esperado {{expectedValue}}</p>
+<p>Dia limite {{limitDay}}</p>
+<p>Valor a pagar {{historical.value}}</p>
+<p>mes actual {{historical.date}}</p>
+{{#if historical.paid}}
+<p>Pagado: SI</p>
+<p>Fecha de pago: {{historical.datePaid}}</p>
+{{else}}
+<p>Pagado: NO</p>
+{{/if}}
+<p>Nota: {{historical.annotation}}</p>
+{{/each}}
+

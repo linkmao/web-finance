@@ -27,5 +27,14 @@ const deleteUser = async (req, res) => {
 }
 
 
+// controlador de desarrollo
+const deleteAllUsers = async (req,res)=>{
+  const deleteAll = await User.deleteMany()
+  deleteAll.message= "SE HAN BORRADO TODOS LOS USUARIOS"
+  console.log("SE HAN BORRADO TODOS LOS USUARIOS")
+  res.status(200).send(deleteAll)
+}
 
-module.exports = {getUsers, getUser, updateUser, deleteUser }
+
+
+module.exports = {getUsers, getUser, updateUser, deleteUser, deleteAllUsers }

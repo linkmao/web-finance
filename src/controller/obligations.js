@@ -3,6 +3,7 @@ const {formatHistorical,searchHistorical}= require('../logic/logic')
 
 const newObligation = async (req, res) => {
   const { nameObligation, description, expectedValue, fixedValue, limitDay, initialDate } = req.body
+  
   userId= req.userId // ESTE ID DE USUARIO VIENE DEL TOKEN
   const historicalValue = formatHistorical(initialDate,expectedValue)
   const newObligation = new Obligations({ nameObligation, description,userId , expectedValue, fixedValue, limitDay, historicalValue })
@@ -27,7 +28,7 @@ const updateObligationHistorical = async (req, res) => {
 }
 
 const getObligations = async (req, res) => {
-  const userId=req.userId
+  const userId=req.userId    // userId viene del token
   const obligations = await Obligations.find({userId})
   res.send(obligations)
 }

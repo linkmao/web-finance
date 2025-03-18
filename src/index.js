@@ -6,8 +6,16 @@ const app = express()
 const passport = require('passport')
 const session = require('express-session')
 
+const path = require('path') // para la obtencion de rutas del proyecto
+const exphbs = require('express-handlebars') // Para el funcionamiento de handlebaras
+
+const {verifyAuth} = require('./midleware/users')
+
+
+
+
   app.use(express.urlencoded({ extended: true })) // envio de datos de fomrulario al backend
-  // app.use(methodOverride('_method')) 
+  app.use(methodOverride('_method')) // Evaluar esta es para que? inputs ocultos?
 
   require('./config/passport')
   app.use(session({
@@ -18,7 +26,7 @@ const session = require('express-session')
   app.use(passport.initialize())
   app.use(passport.session())
 
-
+const index = require('./routes/index')
 const auth = require('./routes/auth')
 const users = require('./routes/users')
 const obligations = require('./routes/obligations')
@@ -29,21 +37,26 @@ entorno.config()
 require('./config/db')
 app.use(express.json())
 
+
+// Configuracion del motor HTML handlebasrs
+app.set('views', path.join(__dirname, 'views'))
+app.set('public', path.join(__dirname, 'public'))
+app.engine('.hbs', exphbs.engine({
+  defaultLayout: 'main.hbs',
+  layoutsDir: path.join(app.get('views'), 'layouts'),
+  partialDir: path.join(app.get('views'), 'partials'),
+  extname: '.hbs'
+}))
+app.set('view engine', '.hbs') // con esta linea queda lista la configuracion del motor de plantilla
+
+app.use(express.static(app.get('public'))) //Configuracion carpeta publica (archivos estaticos) 
+
+
+// Inicio de la escucha del puerto
 app.set('PORT', 3000)
 app.listen(app.get('PORT'), () => { console.log('app listen in port: ', app.get('PORT')) })
 
-app.use('/auth', auth)
-app.use('/users', users)
-app.use('/obligations', obligations)
-
-app.get('/',(req,res)=>{res.send(`<form action="/auth/signin" method="POST">
-  <input name='email'>
-  <input name='password'>
-  <button type="submit">Ingresa</button>
-  </form>`)})
-
-app.get('/loginok',(req,res)=>{
-  const  name=  req.user.name 
-  res.send("<h1>Usuario logueado</h1>"+`nombre ${name}`)})
-app.get('/loginnotok',(req,res)=>{res.send("<h1>Usuario erroneo</h1>")})
-
+app.use('/api/auth', auth)
+app.use('/api/users',users)
+app.use('/api/obligations', obligations)
+app.use('/',index)
